@@ -3,20 +3,21 @@
 import { useState } from 'react'
 
 const TextToSpeech = () => {
-  const [message, setMessage] = useState("Hello name")
-  const [speaking, setSpeaking] = useState(false)
+  const [userInput, setUserInput] = useState("")
 
   const handleSpeak = () => {
-    if (!speaking) {
+      const message = `Hello ${userInput}`
       const speech = new SpeechSynthesisUtterance(message)
       speechSynthesis.speak(speech)
-      speech.onstart = () => setSpeaking(true)
-      speech.onend = () => setSpeaking(false)
-    }
+  }
+
+  const handleInputChange = (event) => {
+    setUserInput(event.target.value)
   }
 
   return (
     <div>
+      <input type="text" value={userInput} onChange={handleInputChange} placeholder="Enter your name"  />
       <button onClick={handleSpeak}>Play greeting</button>
     </div>
   )
